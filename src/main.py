@@ -1,15 +1,7 @@
 from fastapi import FastAPI
-from fastapi_users import FastAPIUsers
 
-from src.core.models import User
-from src.users.config import auth_backend
-from src.users.manager import get_user_manager
+from src.users.config import auth_backend, fastapi_users
 from src.users.schemas import UserRead, UserCreate
-
-fastapi_users = FastAPIUsers[User, int](
-    get_user_manager,
-    [auth_backend],
-)
 
 app = FastAPI(title="Dating-app")
 
@@ -24,3 +16,6 @@ app.include_router(
     prefix="/auth",
     tags=["auth"],
 )
+
+
+current_user = fastapi_users.current_user()

@@ -1,14 +1,17 @@
-from typing import Optional
+from typing import Optional, List
 
 from fastapi_users import schemas
 from pydantic import EmailStr
 
+from src.core.models.users import GenderEnum
+
 
 class UserRead(schemas.BaseUser[int]):
+    id: int
     first_name: str
     last_name: str
-    id: int
     email: EmailStr
+    gender: GenderEnum
     is_active: bool = True
     is_superuser: bool = False
     is_verified: bool = False
@@ -21,6 +24,7 @@ class UserCreate(schemas.BaseUserCreate):
     first_name: str
     last_name: str
     email: EmailStr
+    gender: GenderEnum
     password: str
     is_active: Optional[bool] = True
     is_superuser: Optional[bool] = False
