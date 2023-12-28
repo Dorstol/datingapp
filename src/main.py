@@ -7,7 +7,7 @@ app = FastAPI(title="Dating-app")
 
 app.include_router(
     fastapi_users.get_auth_router(backend=auth_backend),
-    prefix="/auth/jwt",
+    prefix="/auth",
     tags=["auth"],
 )
 

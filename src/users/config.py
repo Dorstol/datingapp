@@ -2,7 +2,7 @@ from fastapi_users import FastAPIUsers
 from fastapi_users.authentication import CookieTransport, AuthenticationBackend
 from fastapi_users.authentication import JWTStrategy
 
-from src.core.models import User
+from src.users.models import User
 from src.users.manager import get_user_manager
 
 cookie_transport = CookieTransport(cookie_name="dating-app", cookie_max_age=3600)
