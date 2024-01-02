@@ -1,10 +1,9 @@
 __all__ = (
     "User",
     "Base",
-    "users_matches",
     "Match",
 )
 
-from src.users.models import User
-from src.base import Base, users_matches
+from src.base import Base
 from src.matches.models import Match
+from src.users.models import User

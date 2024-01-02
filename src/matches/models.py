@@ -1,9 +1,8 @@
-from datetime import datetime
-
-from sqlalchemy import Boolean, func
+from sqlalchemy import Boolean, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.base import Base, users_matches
+from src.users.models import User
+from src.base import Base
 
 
 class Match(Base):
@@ -13,13 +12,8 @@ class Match(Base):
 
     __tablename__ = "match"
 
+    user_id_1: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"))
+    user_id_2: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"))
     is_accepted: Mapped[bool] = mapped_column(Boolean, default=False)
-    created: Mapped[datetime] = mapped_column(
-        server_default=func.now(),
-        default=datetime.utcnow,
-    )
-    users = relationship(
-        "User",
-        secondary=users_matches,
-        back_populates="matches",
-    )
+    user_1 = relationship(User, foreign_keys=[user_id_1])
+    user_2 = relationship(User, foreign_keys=[user_id_2])
