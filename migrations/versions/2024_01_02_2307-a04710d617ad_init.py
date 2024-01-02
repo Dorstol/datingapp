@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 1b1e862c718a
+Revision ID: a04710d617ad
 Revises: 
-Create Date: 2024-01-02 21:49:33.808121
+Create Date: 2024-01-02 23:07:28.162382
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '1b1e862c718a'
+revision: str = 'a04710d617ad'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -35,9 +35,9 @@ def upgrade() -> None:
     )
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=True)
     op.create_table('match',
-    sa.Column('user_id_1', sa.Integer(), nullable=False),
-    sa.Column('user_id_2', sa.Integer(), nullable=False),
-    sa.Column('is_accepted', sa.Boolean(), nullable=False),
+    sa.Column('user_id_1', sa.Integer(), nullable=True),
+    sa.Column('user_id_2', sa.Integer(), server_default='', nullable=True),
+    sa.Column('is_accepted', sa.Boolean(), server_default=sa.text('0'), nullable=False),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id_1'], ['user.id'], ),
     sa.ForeignKeyConstraint(['user_id_2'], ['user.id'], ),
