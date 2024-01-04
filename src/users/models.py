@@ -1,4 +1,5 @@
 import enum
+from typing import Optional
 
 from fastapi_users.db import SQLAlchemyBaseUserTable
 from sqlalchemy import Enum, String, Boolean
@@ -26,10 +27,10 @@ class User(SQLAlchemyBaseUserTable[int], Base):
 
     __tablename__ = "user"
 
-    first_name: Mapped[str] = mapped_column(String(32), nullable=True)
-    last_name: Mapped[str] = mapped_column(String(32), nullable=True)
-    gender: Mapped[str] = mapped_column(Enum(UserGender))
-    interests: Mapped[str] = mapped_column(Enum(GenderInterests))
+    first_name: Mapped[Optional[str]] = mapped_column(String(32))
+    last_name: Mapped[Optional[str]] = mapped_column(String(32))
+    gender: Mapped[UserGender]
+    interests: Mapped[GenderInterests]
     email: Mapped[str] = mapped_column(
         String(length=320), unique=True, index=True, nullable=False
     )

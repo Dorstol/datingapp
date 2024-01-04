@@ -1,17 +1,18 @@
-from pathlib import Path
+import os
 from typing import AsyncGenerator
 
+from dotenv import load_dotenv
 from fastapi import Depends
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
 from src.users.models import User
 
-BASE_DIR = Path(__file__).parent.parent
+load_dotenv()
 
-DATABASE_URL = f"sqlite+aiosqlite:///{BASE_DIR}/test.db"
+DATABASE_URL = f"postgresql+psycopg://{os.getenv('DB_USER')}:{os.getenv('DB_PASS')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
 
-engine = create_async_engine(DATABASE_URL)
+engine = create_async_engine(DATABASE_URL, echo=True,)
 async_session_maker = async_sessionmaker(
     engine,
     class_=AsyncSession,
