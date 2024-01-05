@@ -24,6 +24,3 @@ app.include_router(
     prefix="/matches",
     tags=["Matches"],
 )
-
-
-current_user = fastapi_users.current_user()

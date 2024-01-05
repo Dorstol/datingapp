@@ -1,8 +1,13 @@
-from pydantic import BaseModel
 from typing import Annotated, List
+
 from annotated_types import Ge
+from pydantic import BaseModel
 
 
-class MatchModel(BaseModel):
-    user_id_1: Annotated[int, Ge(1)]
+class Match(BaseModel):
+    user_id: Annotated[int, Ge(1)]
     users_list: List[int]
+
+
+class MatchCreate(Match):
+    pass

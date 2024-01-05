@@ -1,16 +1,27 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database import get_async_session
-from src.users.models import User
-from .crud import _create_match
+from src.database import session_dependency
+from src.matches.crud import _get_matches, _get_match, _create_match
+from src.matches.schemas import Match, MatchCreate
 
 router = APIRouter()
 
 
-@router.post("/create_match/{user_id_1}/{user_id_2}/")
+@router.get("/")
+async def get_matches(
+    session: AsyncSession = Depends(session_dependency),
+) -> list[Match]:
+    return await _get_matches(session)
+
+
+@router.get("/{match_id/}")
+async def get_match(match_id: int, session: AsyncSession = Depends(session_dependency)):
+    return await _get_match(match_id, session)
+
+
+@router.post("/create_match/")
 async def create_match_api(
-    session: AsyncSession = Depends(get_async_session),
+    match_in: MatchCreate, session: AsyncSession = Depends(session_dependency)
 ):
-    pass
+    return await _create_match(match_in, session)
