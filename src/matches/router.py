@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import session_dependency
-from src.matches.crud import _get_matches, _get_match, _create_match
-from src.matches.schemas import Match, MatchCreate
+from src.matches.crud import _get_matches, _get_match, _create_or_update_match
+from src.matches.schemas import Match, CreateOrUpdateMatch
 
 router = APIRouter()
 
@@ -21,7 +21,7 @@ async def get_match(match_id: int, session: AsyncSession = Depends(session_depen
 
 
 @router.post("/create_match/")
-async def create_match_api(
-    match_in: MatchCreate, session: AsyncSession = Depends(session_dependency)
+async def create_or_update_match_api(
+    match_in: CreateOrUpdateMatch, session: AsyncSession = Depends(session_dependency)
 ):
-    return await _create_match(match_in, session)
+    return await _create_or_update_match(match_in, session)

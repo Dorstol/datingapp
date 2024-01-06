@@ -9,5 +9,6 @@ class Match(BaseModel):
     users_list: List[int]
 
 
-class MatchCreate(Match):
-    pass
+class CreateOrUpdateMatch(Match):
+    user_id: Annotated[int, Ge(1)] | None = None
+    users_list: List[int]
